@@ -1,0 +1,13 @@
+####################################################################
+# Dune module information file: This file gets parsed by dunecontrol
+# and by the CMake build scripts.
+####################################################################
+
+Module: opm-python
+Description: Python bindings for opm-common and opm-simulators
+Version: 2024.04-pre
+Label: 2024.04-pre
+Maintainer: hakon.hagland@gmail.com
+MaintainerName: Håkon Hægland
+Url: http://opm-project.org
+Depends: opm-common opm-simulators
