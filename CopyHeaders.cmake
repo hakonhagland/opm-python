@@ -6,11 +6,9 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
                         ${BASE_DIR}/tmp_gen/TestKeywords.cpp
                         ${BASE_DIR}/TestKeywords.cpp)
 
-if (EXISTS ${BASE_DIR}/python/cxx)
-  execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                          ${BASE_DIR}/tmp_gen/builtin_pybind11.cpp
-                          ${BASE_DIR}/python/cxx/builtin_pybind11.cpp)
-endif()
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                        ${BASE_DIR}/tmp_gen/builtin_pybind11.cpp
+                        ${BASE_DIR}/cxx/common/builtin_pybind11.cpp)
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
                         ${BASE_DIR}/tmp_gen/include/opm/input/eclipse/Parser/ParserKeywords/Builtin.hpp

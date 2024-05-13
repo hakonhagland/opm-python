@@ -12,9 +12,14 @@ As a first stage in this plan, the current repository `opm-python-test` was crea
 
 NPROC=5  # Number of build threads when running "make"
 
+for repo in opm-common opm-grid opm-models opm-simulators
+do
+    git clone git@github.com:OPM/"${repo}".git
+done
+git clone git@github.com:hakonhagland/opm-python-test.git
+
 build_opm_common() {
    local flags="-DBUILD_SHARED_LIBS=ON"
-   git clone git@github.com:OPM/opm-common.git
    cd opm-common
    mkdir build
    cd build
@@ -24,8 +29,7 @@ build_opm_common() {
 }
 
 build_opm_grid() {
-   local flags=""
-   git clone git@github.com:OPM/opm-grid.git
+   local flags="-DBUILD_SHARED_LIBS=ON"
    cd opm-grid
    mkdir build
    cd build
@@ -35,8 +39,7 @@ build_opm_grid() {
 }
 
 build_opm_models() {
-   local flags=""
-   git clone git@github.com:OPM/opm-models.git
+   local flags="-DBUILD_SHARED_LIBS=ON"
    cd opm-models
    mkdir build
    cd build
@@ -47,7 +50,6 @@ build_opm_models() {
 
 build_opm_simulators() {
    local flags="-DBUILD_SHARED_LIBS=ON"
-   git clone git@github.com:OPM/opm-simulators.git
    cd opm-simulators
    mkdir build
    cd build
@@ -58,7 +60,6 @@ build_opm_simulators() {
 
 build_opm_python() {
    local flags=""
-   git clone git@github.com:hakonhagland/opm-python-test.git
    cd opm-python-test
    mkdir build
    cd build

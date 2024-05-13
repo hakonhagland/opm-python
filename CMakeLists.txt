@@ -19,7 +19,8 @@ set(PYTHON_OPM_SIMULATORS_PACKAGE_PATH ${PROJECT_BINARY_DIR}/python/opm/simulato
 
 # Set the path to the input docstrings.json file and the output .hpp file
 set(PYTHON_DOCSTRINGS_FILE "${PROJECT_SOURCE_DIR}/python/docstrings.json")
-set(PYTHON_DOCSTRINGS_GENERATED_HPP "${PROJECT_BINARY_DIR}/cxx/simulators/PyBlackOilSimulatorDoc.hpp")
+set(PYTHON_GENERATED_INCLUDE_DIR "${PROJECT_BINARY_DIR}/cxx/simulators")
+set(PYTHON_DOCSTRINGS_GENERATED_HPP "${PYTHON_GENERATED_INCLUDE_DIR}/PyBlackOilSimulatorDoc.hpp")
 file(MAKE_DIRECTORY "${PROJECT_BINARY_DIR}/cxx/simulators")
 
 # Command to run the Python script to generate the .hpp file
@@ -44,7 +45,7 @@ target_link_libraries( simulators PRIVATE opmsimulators )
 
 # Add the build directory where the generated hpp file will be
 #  to the include directories for the target
-target_include_directories(simulators PRIVATE ${PROJECT_BINARY_DIR}/python)
+target_include_directories(simulators PRIVATE ${PYTHON_GENERATED_INCLUDE_DIR})
 
 set(PYTHON_PATH ${PROJECT_BINARY_DIR}/python:${opm-common_DIR}/python:$ENV{PYTHONPATH})
 # NOTE: To avoid issue wiht MPI_Init() being called after MPI_Finalize(),

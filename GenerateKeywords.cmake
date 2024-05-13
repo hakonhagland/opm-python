@@ -57,7 +57,7 @@ list(APPEND _tmp_output ${PROJECT_BINARY_DIR}/tmp_gen/include/opm/input/eclipse/
 set(GEN_DEPS ${_tmp_output})
 list(APPEND genkw_argv ${PROJECT_BINARY_DIR}/tmp_gen/builtin_pybind11.cpp)
 list(APPEND _tmp_output ${PROJECT_BINARY_DIR}/tmp_gen/builtin_pybind11.cpp)
-list(APPEND _target_output ${PROJECT_BINARY_DIR}/python/cxx/builtin_pybind11.cpp)
+list(APPEND _target_output ${PROJECT_BINARY_DIR}/cxx/common/builtin_pybind11.cpp)
 list(APPEND GEN_DEPS copy_python)
 
 #message(STATUS "xxx: _tmp_output: ${_tmp_output}")

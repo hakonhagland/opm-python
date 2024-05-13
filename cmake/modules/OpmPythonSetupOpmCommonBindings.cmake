@@ -12,10 +12,12 @@ foreach (_file IN LISTS PYTHON_COMMON_CXX_SOURCE_FILES)
 endforeach (_file)
 pybind11_add_module(opmcommon_python
                     ${${opm}_COMMON_CXX_SOURCE_FILES}
-                    ${PROJECT_BINARY_DIR}/python/cxx/builtin_pybind11.cpp)
+                    ${PROJECT_BINARY_DIR}/cxx/common/builtin_pybind11.cpp)
 target_link_libraries(opmcommon_python PRIVATE
                       opmcommon)
-if(TARGET pybind11::pybind11)
+target_include_directories(opmcommon_python PRIVATE ${PROJECT_SOURCE_DIR}/cxx/common)
+
+                      if(TARGET pybind11::pybind11)
   target_link_libraries(opmcommon_python PRIVATE pybind11::pybind11)
 else()
   target_include_directories(opmcommon_python SYSTEM PRIVATE ${pybind11_INCLUDE_DIRS})
