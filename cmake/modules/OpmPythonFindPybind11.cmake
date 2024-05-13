@@ -1,0 +1,7 @@
+get_target_property(_lib_path Python3::Python IMPORTED_LOCATION)
+set(PYTHON_LIBRARY ${_lib_path})
+set(PYTHON_LIBRARIES {PYTHON_LIBRARY})
+find_package(pybind11 2.2 CONFIG)
+if (NOT pybind11_FOUND)
+  include(DownloadPyBind11)
+endif()

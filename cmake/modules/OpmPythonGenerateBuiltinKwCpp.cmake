@@ -1,0 +1,5 @@
+if(NOT cjson_FOUND)
+  include(DownloadCjson)
+endif()
+include_directories(${cjson_SOURCE_DIR})
+include(GenerateKeywords.cmake)

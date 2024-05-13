@@ -16,3 +16,7 @@ set (opm-python_DEPS
   )
 
 find_package_deps(opm-python)
+# Download fmt if it is not found
+if(NOT fmt_FOUND)
+  include(DownloadFmt)
+endif()
