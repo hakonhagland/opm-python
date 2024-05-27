@@ -45,7 +45,7 @@ class TestBasic(unittest.TestCase):
         #    However, as noted above this is not currently possible.
         #
         test_dir = Path(os.path.dirname(__file__))
-        cls.data_dir = test_dir.parent.joinpath("test_data/SPE1CASE1a")
+        cls.data_dir = test_dir.joinpath("test_data/SPE1CASE1a")
 
 
     def test_all(self):
