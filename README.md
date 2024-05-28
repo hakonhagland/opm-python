@@ -7,6 +7,8 @@ As a first stage in this plan, the current repository `opm-python-test` was crea
 
 ## To build opm-python-test
 
+Note that we are not able to build with shared libraries yet, see https://github.com/OPM/opm-simulators/issues/5390.
+
 ```
 #! /bin/bash
 
@@ -19,7 +21,7 @@ done
 git clone git@github.com:hakonhagland/opm-python-test.git
 
 build_opm_common() {
-   local flags="-DBUILD_SHARED_LIBS=ON"
+   local flags="-DBUILD_SHARED_LIBS=OFF"
    cd opm-common
    mkdir build
    cd build
@@ -29,7 +31,7 @@ build_opm_common() {
 }
 
 build_opm_grid() {
-   local flags="-DBUILD_SHARED_LIBS=ON"
+   local flags="-DBUILD_SHARED_LIBS=OFF"
    cd opm-grid
    mkdir build
    cd build
@@ -39,7 +41,7 @@ build_opm_grid() {
 }
 
 build_opm_models() {
-   local flags="-DBUILD_SHARED_LIBS=ON"
+   local flags="-DBUILD_SHARED_LIBS=OFF"
    cd opm-models
    mkdir build
    cd build
@@ -49,7 +51,7 @@ build_opm_models() {
 }
 
 build_opm_simulators() {
-   local flags="-DBUILD_SHARED_LIBS=ON"
+   local flags="-DBUILD_SHARED_LIBS=OFF"
    cd opm-simulators
    mkdir build
    cd build
@@ -75,3 +77,13 @@ build_opm_simulators
 build_opm_python
 
 ```
+## Current state
+
+- Unit tests are working
+
+## TODO
+
+- Implement cmake "make install" procedure
+- Implement GitHub actions to build sphinx docs
+- Implement GitHub actions to run unit tests
+- Implement workflow to publish "opm" as PyPI package

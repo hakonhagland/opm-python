@@ -10,9 +10,9 @@ set_tests_properties(opmcommon_tests PROPERTIES FIXTURES_REQUIRED CopyFilesFixtu
 #   the tests in the "test" sub directory.
 foreach(case_name IN ITEMS basic fluidstate_variables primary_variables schedule throw)
   add_test(NAME python_${case_name}
-     WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/${GENERATED_PROJECT_DIR}/tests/opmsimulators"
+     WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/${GENERATED_PROJECT_DIR}/tests"
      COMMAND ${CMAKE_COMMAND}
-     -E env PYTHONPATH="${PROJECT_BINARY_DIR}/${GENERATED_PROJECT_DIR}/src:${PROJECT_BINARY_DIR}/${GENERATED_PROJECT_DIR}/tests" ${Python3_EXECUTABLE}
-     -m unittest test_${case_name}.py)
+       -E env PYTHONPATH=${PROJECT_BINARY_DIR}/${GENERATED_PROJECT_DIR}/src:${PROJECT_BINARY_DIR}/${GENERATED_PROJECT_DIR}/tests
+       ${Python3_EXECUTABLE} -m unittest opmsimulators/test_${case_name}.py)
   set_tests_properties(python_${case_name} PROPERTIES FIXTURES_REQUIRED CopyFilesFixture)
 endforeach()
