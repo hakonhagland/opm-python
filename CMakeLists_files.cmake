@@ -28,7 +28,44 @@ list (APPEND TEST_SOURCE_FILES
   )
 
 list (APPEND TEST_DATA_FILES
-  )
+embedded/tests/PYACTION.DATA
+embedded/tests/act1.py
+embedded/tests/action_syntax_error.py
+embedded/tests/EMBEDDED_PYTHON.DATA
+embedded/tests/SPE1CASE1.DATA
+embedded/tests/SPE1CASE1_RPTONLY.DATA
+embedded/tests/SPE1CASE1_SUMTHIN.DATA
+embedded/tests/ACTIONX_M1.DATA
+embedded/tests/ACTIONX_M1_MULTIPLE.DATA
+embedded/tests/ACTIONX_M1_RESTART.DATA
+embedded/tests/ACTIONX_M1.UNRST
+embedded/tests/ACTIONX_M1.X0010
+embedded/tests/wclose.py
+embedded/tests/msim/MSIM_PYACTION.DATA
+embedded/tests/msim/MSIM_PYACTION_RETRIEVE_INFO.DATA
+embedded/tests/msim/MSIM_PYACTION_CHANGING_SCHEDULE.DATA
+embedded/tests/msim/MSIM_PYACTION_CHANGING_SCHEDULE_ACTIONX_CALLBACK.DATA
+embedded/tests/msim/MSIM_PYACTION_INSERT_KEYWORD.DATA
+embedded/tests/msim/MSIM_PYACTION_INSERT_INVALID_KEYWORD.DATA
+embedded/tests/msim/MSIM_PYACTION_NO_RUN_FUNCTION.DATA
+embedded/tests/msim/MSIM_PYACTION_OPEN_WELL_AT_PAST_REPORT_STEP.DATA
+embedded/tests/msim/MSIM_PYACTION_OPEN_WELL_AT_TOO_LATE_REPORT_STEP.DATA
+embedded/tests/msim/MSIM_PYACTION_EXIT.DATA
+embedded/tests/EXIT_TEST.DATA
+embedded/tests/msim/exit.py
+embedded/tests/msim/retrieve_info.py
+embedded/tests/msim/action1.py
+embedded/tests/msim/action2.py
+embedded/tests/msim/action2_no_run_function.py
+embedded/tests/msim/action3.py
+embedded/tests/msim/action3_actionx_callback.py
+embedded/tests/msim/action_count.py
+embedded/tests/msim/insert_keyword.py
+embedded/tests/msim/insert_invalid_keyword.py
+embedded/tests/msim/action_count_no_run_function.py
+embedded/tests/msim/open_well_past.py
+embedded/tests/msim/open_well_too_late.py
+)
 
 
 list (APPEND PUBLIC_HEADER_FILES

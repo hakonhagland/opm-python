@@ -6,6 +6,7 @@ set (opm-python_CONFIG_VAR
 set (opm-python_DEPS
   # Compile with C99 support if available
   "C99"
+  "Boost 1.44.0 COMPONENTS system unit_test_framework REQUIRED"
   # DUNE prerequisites
   "dune-common REQUIRED"
   "dune-istl REQUIRED"
