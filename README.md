@@ -1,15 +1,12 @@
-# opm-python-test
+# opm-python
 
-Testing repository for `opm-python`.
+Python bindings for [`opm-simulators`](https://github.com/OPM/opm-simulators) and [`opm-common`](https://github.com/OPM/opm-common). This is currently work in progress.
 
-The plan is to create a repository https://github.com/OPM/opm-python/ that will build Python bindings for `opm-common` and `opm-simulators`.
-As a first stage in this plan, the current repository `opm-python-test` was created for discussing and preparing the implementation of the `opm-python` repository.
-
-## To build opm-python-test
+## To build opm-python
 
 - Note that we are not able to build with shared libraries yet, see https://github.com/OPM/opm-simulators/issues/5390.
 
-- We need to enable embedded Python in `opm-common` in order to run the PYACTION test cases.
+- We need to enable embedded Python in `opm-common` in order to run the `PYACTION` test cases.
 
 - Build script:
 
@@ -18,11 +15,10 @@ As a first stage in this plan, the current repository `opm-python-test` was crea
 
 NPROC=5  # Number of build threads when running "make"
 
-for repo in opm-common opm-grid opm-models opm-simulators
+for repo in opm-common opm-grid opm-models opm-simulators opm-python
 do
     git clone git@github.com:OPM/"${repo}".git
 done
-git clone git@github.com:hakonhagland/opm-python-test.git
 
 build_opm_common() {
    local flags="-DBUILD_SHARED_LIBS=OFF -DOPM_ENABLE_PYTHON=ON -DOPM_ENABLE_EMBEDDED_PYTHON=ON"
