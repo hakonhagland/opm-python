@@ -1,7 +1,11 @@
+# TODO: Use the opm_add_test() macro in opm-common's OpmSatellites.cmake to add tests
+#    instead of using add_test() as below.
+
 add_test(NAME opmcommon_tests
        WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/${GENERATED_PROJECT_DIR}/tests/opmcommon"
        COMMAND ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/helper_scripts/discover_opmcommon_tests.py)
 set_tests_properties(opmcommon_tests PROPERTIES FIXTURES_REQUIRED CopyFilesFixture)
+#add_dependencies(test-suite "opmcommon_tests")
 
 # NOTE: To avoid issue wiht MPI_Init() being called after MPI_Finalize(),
 #  see PR https://github.com/OPM/opm-simulators/pull/5325  we are
@@ -15,4 +19,5 @@ foreach(case_name IN ITEMS basic fluidstate_variables primary_variables schedule
        -E env PYTHONPATH=${PROJECT_BINARY_DIR}/${GENERATED_PROJECT_DIR}/src:${PROJECT_BINARY_DIR}/${GENERATED_PROJECT_DIR}/tests
        ${Python3_EXECUTABLE} -m unittest opmsimulators/test_${case_name}.py)
   set_tests_properties(python_${case_name} PROPERTIES FIXTURES_REQUIRED CopyFilesFixture)
+  #add_dependencies(test-suite python_${case_name})
 endforeach()

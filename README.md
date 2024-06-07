@@ -7,7 +7,11 @@ As a first stage in this plan, the current repository `opm-python-test` was crea
 
 ## To build opm-python-test
 
-Note that we are not able to build with shared libraries yet, see https://github.com/OPM/opm-simulators/issues/5390.
+- Note that we are not able to build with shared libraries yet, see https://github.com/OPM/opm-simulators/issues/5390.
+
+- We need to enable embedded Python in `opm-common` in order to run the PYACTION test cases.
+
+- Build script:
 
 ```
 #! /bin/bash
@@ -21,7 +25,7 @@ done
 git clone git@github.com:hakonhagland/opm-python-test.git
 
 build_opm_common() {
-   local flags="-DBUILD_SHARED_LIBS=OFF"
+   local flags="-DBUILD_SHARED_LIBS=OFF -DOPM_ENABLE_PYTHON=ON -DOPM_ENABLE_EMBEDDED_PYTHON=ON"
    cd opm-common
    mkdir build
    cd build
@@ -61,6 +65,8 @@ build_opm_simulators() {
 }
 
 build_opm_python() {
+   # If you want to run integration tests from opm-tests add path below, e.g.
+   # local flags="-DOPM_TESTS_ROOT=<path to opm-tests>"
    local flags=""
    cd opm-python-test
    mkdir build
