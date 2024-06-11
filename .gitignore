@@ -26,7 +26,7 @@ build/
 .dir-locals.el
 
 # Python sphinx build
-python/sphinx_docs/docs/_build/
+docs/docs/_build/
 
 # Python cache directories
 **/__pycache__/
