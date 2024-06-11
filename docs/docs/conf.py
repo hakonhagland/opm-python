@@ -1,11 +1,11 @@
 # Configuration file for the Sphinx documentation builder.
 
-project = "opm.simulators"
+project = "opm"
 copyright = "2024 Equinor ASA"
 author = "Håkon Hægland"
 
 # Function to extract release version from dune.module file
-def extract_opm_simulators_release():
+def extract_opm_python_release():
     version_file_path = '../../dune.module'
     with open(version_file_path, 'r') as file:
         for line in file:
@@ -14,7 +14,7 @@ def extract_opm_simulators_release():
                 return version_string
     return "unknown"  # Fallback version
 
-release = extract_opm_simulators_release()
+release = extract_opm_python_release()
 
 # -- General configuration ---------------------------------------------------
 import os
