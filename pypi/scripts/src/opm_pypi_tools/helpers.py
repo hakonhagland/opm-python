@@ -1,3 +1,4 @@
+import logging
 
 from pathlib import Path
 from opm_pypi_tools.constants import Directories, Filenames
@@ -23,6 +24,16 @@ class Helpers:
             raise FileNotFoundError(f"No files matching {pattern} found in {dir_}")
         filename = files[0].name
         return filename
+
+    @staticmethod
+    def generate_file_from_template(
+        filename: Path, src_dir: Path, dest_dir: str, variables: dict[str,str]
+    ) -> None:
+        logging.info(f"Generating {filename} in {dest_dir}...")
+        template = Helpers.read_template_file(src_dir / filename, variables)
+        with open(dest_dir / filename, 'w', encoding='utf-8') as file:
+            file.write(template)
+        return
 
     @staticmethod
     def read_template_file(filename: Path, variables: dict[str,str]) -> str:

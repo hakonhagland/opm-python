@@ -4,7 +4,8 @@ from pathlib import Path
 
 import click
 from opm_pypi_tools.build_dist import BuildDist
-from opm_pypi_tools.constants import DockerImageName
+from opm_pypi_tools.build_opm import BuildOPM
+from opm_pypi_tools.constants import DockerImageName, PythonVersion
 
 @click.group()
 @click.option("--verbose", "-v", is_flag=True, help="Show verbose output")
@@ -60,10 +61,10 @@ def build(
     """Builds the OPM Python source distribution and wheels for a set of Python versions."""
     # Check if the provided path exists and is a directory
     if not (Path(build_dir).exists() and Path(build_dir).is_dir()):
-        click.echo('Error: The provided path does not exist or is not a directory.')
+        click.echo('Error: The provided build dir path does not exist or is not a directory.')
         return
     if not (Path(source_dir).exists() and Path(source_dir).is_dir()):
-        click.echo('Error: The provided path does not exist or is not a directory.')
+        click.echo('Error: The provided source dir path does not exist or is not a directory.')
         return
     output_dir_ = Path(output_dir).resolve()
     if output_dir_.exists():
@@ -87,6 +88,33 @@ def build(
         opm_version,
         output_dir,
         docker_image).build()
+
+@main.command()
+@click.option(
+    '--source-dir',
+    required=True,
+    help='Path to the opm-python source directory')
+@click.option(
+    '--python-version',
+    required=True,
+    help='Python version to use when building opm-common in the manylinux docker container. The value should be a string in the format "X.Y" where X is the major version and Y is the minor version, e.g., "3.9". Minimum supported version is 3.8.')
+@click.option(
+    '--docker-tag-extension',
+    required=True,
+    help='Docker image tag extension. The generated docker image is assigned a tag according to the following template: "manylinux2014_x86_64-opm-python{python-version}{tag-extension}". This tag can be used later when pulling the image to build opm-python in a manylinux docker container.')
+def build_opm(source_dir: str, python_version: str, docker_tag_extension: str) -> None:
+    """Builds opm-common, opm-grid, opm-models, opm-simulators inside
+    a manylinux docker container. Each module is installed to /opt/opm inside the container.
+    Finally, all build artifacts are deleted (except for the /opt/opm directory) to reduce the size of the image."""
+    python_version = PythonVersion.from_str(python_version)
+    if not (Path(source_dir).exists() and Path(source_dir).is_dir()):
+        click.echo('Error: The provided source dir path does not exist or is not a directory.')
+        return
+    logging.info(f"Building opm-common, opm-grid, opm-models, and opm-simulators in docker container...")
+    docker_tag = f"manylinux2014_x86_64-opm-python{python_version}{docker_tag_extension}"
+    BuildOPM(
+        source_dir, python_version, docker_tag
+    ).build()
 
 if __name__ == "__main__":
     main()

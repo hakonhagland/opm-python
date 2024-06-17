@@ -22,7 +22,7 @@ class BuildDist:
     ) -> None:
         self.build_dir = Path(build_dir).resolve()
         self.source_dir = Path(source_dir).resolve()
-        self.template_dir = self.source_dir / Directories.pypi / Directories.templates
+        self.template_dir = self.source_dir / Directories.pypi / Directories.templates / Directories.build
         self.opm_version = opm_version + python_package_version
         self.project_dir = self.build_dir / Directories.opm_python
         if not self.project_dir.exists():
@@ -52,7 +52,6 @@ class BuildDist:
     def copy_file_to_output_dir(self, filename: str):
         logging.info(f"Copying {filename} to {self.output_dir}...")
         shutil.copy(self.template_dir / filename, self.output_dir / filename)
-        logging.info(f"{filename} copied to {self.output_dir}.")
         return
 
     def copy_source_files(self):
@@ -65,20 +64,19 @@ class BuildDist:
         return
 
     def generate_dockerfile(self):
-        logging.info(f"Generating Dockerfile in {self.output_dir}...")
-        content = Helpers.read_template_file(
-            self.template_dir / "Dockerfile",
-            variables={
-                "docker_image_name": self.docker_image.name
-            }
-        )
-        with open(self.output_dir / "Dockerfile", "w", encoding='utf-8') as file:
-            file.write(content)
-        logging.info(f"Dockerfile generated in {self.output_dir}.")
+        self.generate_file("Dockerfile", variables={
+            "docker_image_name": self.docker_image.name
+        })
         return
 
     def generate_docker_build_script(self):
         self.copy_file_to_output_dir("manylinux-build.sh")
+        return
+
+    def generate_file(self, filename: str, variables: dict):
+        Helpers.generate_file_from_template(
+            filename, src_dir=self.template_dir, dest_dir=self.output_dir, variables=variables
+        )
         return
 
     def generate_license(self):
@@ -90,18 +88,12 @@ class BuildDist:
         return
 
     def generate_pyproject_toml(self):
-        logging.info(f"Generating pyproject.toml in {self.output_dir}...")
-        content = Helpers.read_template_file(
-            self.template_dir / "pyproject.toml",
-            variables={
-                "opm_common_so": self.opm_common_so_fn,
-                "opm_simulators_so": self.opm_simulators_so_fn,
-                "package_version": self.opm_version,
-            }
-        )
-        with open(self.output_dir / "pyproject.toml", "w", encoding='utf-8') as file:
-            file.write(content)
-        logging.info(f"pyproject.toml generated in {self.output_dir}.")
+        self.generate_file("pyproject.toml", variables={
+            "opm_common_so": self.opm_common_so_fn,
+            "opm_simulators_so": self.opm_simulators_so_fn,
+            "package_version": self.opm_version,
+        })
+        return
 
     def generate_readme(self):
         self.copy_file_to_output_dir("README.md")
