@@ -34,6 +34,7 @@ jobs:
             mkdir gh-pages
             touch gh-pages/.nojekyll
             cd docs
+            echo "GITHUB_REF: $GITHUB_REF"
             # Determine the current branch
             CURRENT_BRANCH=$(echo $GITHUB_REF | awk -F'/' '{print $3}')
             echo "Current branch: $CURRENT_BRANCH"
