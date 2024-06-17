@@ -1,0 +1,54 @@
+name: Build Python Sphinx Docs and push to gh-pages
+
+on:
+    push:
+        paths:
+          - 'python/**'
+          - '.github/workflows/python_sphinx_docs.yml'
+    pull_request:
+        paths:
+          - 'python/**'
+          - '.github/workflows/python_sphinx_docs.yml'
+permissions:
+    contents: write
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout source code
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0   # Fetch all history for all tags and branches
+        - name: Set up Python
+          uses: actions/setup-python@v4
+          with:
+            python-version: "3.11"
+        - name: Install poetry
+          uses: abatilo/actions-poetry@v2
+        - name: Install python dependencies
+          run: |
+            cd docs
+            poetry install
+        - name: Build documentation
+          run: |
+            mkdir gh-pages
+            touch gh-pages/.nojekyll
+            cd docs
+            echo "GITHUB_REF: $GITHUB_REF"
+            # Determine the current branch
+            CURRENT_BRANCH=$(echo $GITHUB_REF | awk -F'/' '{print $3}')
+            echo "Current branch: $CURRENT_BRANCH"
+            # Currently we build only docs for the HEAD of the master branch
+            # Later we can add release tags to the list to get the docs for the releases
+            # For example: -b "main, release/2024.04/final" will build the docs for
+            # the main branch and the release/2024.04/final tag
+            poetry run sphinx-versioned -m $CURRENT_BRANCH -b $CURRENT_BRANCH --git-root ../
+        - name: Copy documentation to gh-pages
+          run: |
+            cp -r docs/docs/_build/* gh-pages/
+        - name: Deploy documentation
+          if: ${{ github.event_name == 'push' }}
+          uses: JamesIves/github-pages-deploy-action@v4
+          with:
+            branch: gh-pages
+            folder: gh-pages

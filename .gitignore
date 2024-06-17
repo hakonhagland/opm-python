@@ -1,0 +1,33 @@
+# Editor autosave files
+*~
+*.swp
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Build directory in source
+build/
+
+# Mac OS X debug info
+*.dSYM
+
+# emacs directory setting:
+.dir-locals.el
+
+# Python sphinx build
+docs/docs/_build/
+
+# Python cache directories
+**/__pycache__/
+
